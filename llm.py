@@ -7,7 +7,7 @@ from langchain_chroma import Chroma
 from langchain.prompts import PromptTemplate
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
-from llm.llm_template import prompt_template ,refine_template
+from qa_chain.llm_template import prompt_template ,refine_template
 
 # Load environment variables
 load_dotenv()
@@ -23,7 +23,7 @@ def get_completion(prompt, model=model_use):
     response = client.chat.completions.create(
         model=model,
         messages=messages,
-        temperature=0.2
+        temperature=1
     )
     return response.choices[0].message.content.strip()
 
@@ -46,8 +46,7 @@ qa = ConversationalRetrievalChain.from_llm(llm=ChatGroq(model_name=model_use, te
                                            memory=memory)
 
 question = ["""
-What is the software that this the context talking about?
-A. Python B.Power BI C.PowerBuilder D.PowerBuilder
+Is there any expression funtion that can just take the word after a specific position?
 """]
 
 for q in question:

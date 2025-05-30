@@ -46,10 +46,10 @@ split_docs = text_splitter.split_documents(pages)
 print(f"Splited quantity: {len(split_docs)}")
 print(f"Word Quantity after splited(Used to estimate the quantity of token):{sum([len(doc.page_content) for doc in split_docs])}")
 
-embedding = HuggingFaceEmbeddings(
-    model = "moka-ai/m3e-base"
-    # model_kwargs = {'device': device}
-)
+def get_embedding(embedding: str, embedding_key:str=None, env_file:str = None):
+   if embedding == "m3e":
+      return HuggingFaceEmbeddings(model = "moka-ai/m3e-base")#, model_kwargs = {'device': device})
+      
 
 persist_directory = './database/vector_db/chroma'
 
