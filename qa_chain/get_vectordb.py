@@ -1,5 +1,6 @@
 from langchain_huggingface import HuggingFaceEmbeddings
-import os
+import os, sys
+sys.path.append("./database")
 from database.create_db import create_db, load_knowledge_db
 from embedding.get_embedding import get_embedding
 

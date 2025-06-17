@@ -26,7 +26,7 @@ class QA_chain_self():
 
         self.QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context", "question"],
                                               template=self.template)
-        self.retriever = self.vectordv.as_retriever(search_type = "similarity",
+        self.retriever = self.vectordb.as_retriever(search_type = "similarity",
                                                     search_kwrags ={'k': self.top_k})
         self.qa_chain = RetrievalQA.from_chain_type(llm=self.llm,
                                                     retrieval = self.retriever,

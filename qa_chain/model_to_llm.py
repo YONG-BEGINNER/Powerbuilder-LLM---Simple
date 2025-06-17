@@ -9,5 +9,5 @@ def model_to_llm(model:str=None, temperature:float=0.0, appid:str=None, api_key:
             api_key = parse_llm_api_key("groq")
         llm = Groq(api_key=api_key, model=model , temperature=temperature)
     else:
-        raise ValueError(f"Model {model} not support!!")
+        raise ValueError(f"Model {model} not support!!!")
     return llm

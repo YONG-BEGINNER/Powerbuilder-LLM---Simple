@@ -1,8 +1,9 @@
-import os
+import os, sys
 from dotenv import load_dotenv
 from groq import Groq
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv, find_dotenv
+sys.path.append('./qa_chain')
 from qa_chain.llm_template import prompt_template, refine_template
 
 def model_to_llm(model:str=None, temperature:float=0.0, appid:str=None, api_key:str=None):
@@ -21,11 +22,12 @@ def get_completion(prompt:str, model:str, temperature:float=0.1, api_key:str=Non
 
 def get_completion_groq(prompt:str, model:str, temperature: float, api_key:str):
     if api_key == None:
-        api_key = parse_llm_api_key("llama70")
-    Groq.api_key = api_key
+        api_key = parse_llm_api_key("groq")
+
+    Groq_client = Groq(api_key=api_key)
 
     messages = [{"role": "user", "content": prompt}]
-    response = Groq.chat.completions.create(
+    response = Groq_client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=1
@@ -37,7 +39,7 @@ def parse_llm_api_key(model:str, env_file:dict()=None):
         _ = load_dotenv(find_dotenv())
         env_file = os.environ
 
-    if model == "Groq":
+    if model == "groq":
         return env_file['GROQ_API_KEY']
     else:
         raise ValueError(f"model {model} not support!!")
