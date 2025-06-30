@@ -101,14 +101,14 @@ with block as demo:
         gr.Image(value=AIGC_LOGO_PATH, scale=0.3, min_width=10, show_label=False, show_download_button=False, container=False)
    
         with gr.Column(scale=2):
-            gr.Markdown("""<h1><center>动手学大模型应用开发</center></h1>
+            gr.Markdown("""<h1><center>Self-Learning LLM AI</center></h1>
                 <center>LLM-UNIVERSE</center>
                 """)
         gr.Image(value=DATAWHALE_LOGO_PATH, scale=0.3, min_width=10, show_label=False, show_download_button=False, container=False)
 
     with gr.Row():
         with gr.Column(scale=4):
-            chatbot = gr.Chatbot(height=400, show_copy_button=True, show_share_button=True, avatar_images=(AIGC_AVATAR_PATH, DATAWHALE_AVATAR_PATH))
+            chatbot = gr.Chatbot(height=400,autoscroll=True, show_copy_button=True, show_share_button=True, avatar_images=(AIGC_AVATAR_PATH, DATAWHALE_AVATAR_PATH))
             # 创建一个文本框组件，用于输入 prompt。
             msg = gr.Textbox(label="Prompt/问题")
 
@@ -123,11 +123,11 @@ with block as demo:
                     components=[chatbot], value="Clear console")
 
         with gr.Column(scale=1):
-            file = gr.File(label='请选择知识库目录', file_count='directory',
+            file = gr.File(label='Please Upload the document that need to be embedded.', file_count='multiple',
                            file_types=['.txt', '.md', '.docx', '.pdf'])
             with gr.Row():
-                init_db = gr.Button("知识库文件向量化")
-            model_argument = gr.Accordion("参数配置", open=False)
+                init_db = gr.Button("Knowledge Base Document Embedding")
+            model_argument = gr.Accordion("Parameter Configuration", open=False)
             with model_argument:
                 temperature = gr.Slider(0,
                                         1,
@@ -150,7 +150,7 @@ with block as demo:
                                         label="history length",
                                         interactive=True)
 
-            model_select = gr.Accordion("模型选择")
+            model_select = gr.Accordion("Model")
             with model_select:
                 llm = gr.Dropdown(
                     LLM_MODEL_LIST,
@@ -190,6 +190,6 @@ with block as demo:
 # threads to consume the request
 gr.close_all()
 # 启动新的 Gradio 应用，设置分享功能为 True，并使用环境变量 PORT1 指定服务器端口。
-# demo.launch(share=True, server_port=int(os.environ['PORT1']))
+# demo.launch(share=True, server_port=int(os.environ.get('PORT1', 7860)))
 # 直接启动
 demo.launch()
